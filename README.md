@@ -19,6 +19,7 @@ here is platform-specific.
 | [`demo_tlm2_gs3/`](demo_tlm2_gs3/) | `tlm2_gs3` | TLM-2.0 getting started (3): a `Router<N>` interconnect between the initiator and 4 targets — address decode/mask on the forward path, tagged sockets + address recompose on the backward path. |
 | [`demo_tlm2_gs4/`](demo_tlm2_gs4/) | `tlm2_gs4` | TLM-2.0 getting started (4): the approximately-timed style — `nb_transport` 4-phase base protocol, payload event queues, a 2-deep pipelined target with the exclusion rules, and an explicit memory manager. Trace goes to `foo.txt`. |
 | [`demo_tlm2_gs5/`](demo_tlm2_gs5/) | `tlm2_gs5` | TLM-2.0 getting started (5): two loosely-timed initiators with temporal decoupling + quantum keeper, a `Bus<2,4>` with tagged sockets to four memories, DMI both ways with broadcast invalidate. |
+| [`demo_tlm2_gs6/`](demo_tlm2_gs6/) | `tlm2_gs6` | TLM-2.0 getting started (6): the same bus with **multi-sockets** (`multi_passthrough_*`) instead of tagged-socket arrays; the AT initiator/target of gs4, 4 initiators → bus → 4 targets. |
 
 ## Prerequisites
 
@@ -42,6 +43,7 @@ cmake --build build
 ./build/demo_tlm2_gs3/tlm2_gs3
 ./build/demo_tlm2_gs4/tlm2_gs4   # writes foo.txt in the working dir
 ./build/demo_tlm2_gs5/tlm2_gs5
+./build/demo_tlm2_gs6/tlm2_gs6   # also writes foo.txt
 ```
 
 ## Build & run — one demo on its own
@@ -95,12 +97,16 @@ sc_demo/
 │   ├── CMakeLists.txt
 │   ├── README.md
 │   └── *.cpp / *.h
-└── demo_tlm2_gs5/           # 2 LT initiators + quantum keeper, Bus<2,4>, DMI broadcast
+├── demo_tlm2_gs5/           # 2 LT initiators + quantum keeper, Bus<2,4>, DMI broadcast
+│   ├── CMakeLists.txt
+│   ├── README.md
+│   └── *.cpp / *.h
+└── demo_tlm2_gs6/           # multi_passthrough sockets: 4 AT initiators -> bus -> 4 targets
     ├── CMakeLists.txt
     ├── README.md
     └── *.cpp / *.h
 ```
 
-The five TLM-2.0 demos follow the file layout of
+The six TLM-2.0 demos follow the file layout of
 [SingularityKChen/SystemC-Training](https://github.com/SingularityKChen/SystemC-Training)
 (one header per component + `testbench.cpp`).
