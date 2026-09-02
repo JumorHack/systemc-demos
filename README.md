@@ -13,6 +13,7 @@ here is platform-specific.
 |--------|--------|---------------|
 | [`demo_xor/`](demo_xor/) | `exor2_tb` | Structural modelling: a 2-input XOR built from four NAND gates, driven by a clocked stimulus/monitor testbench, with a VCD waveform dump. |
 | [`demo_hier_channel/`](demo_hier_channel/) | `stack_tb` | Hierarchical channel: an `sc_module` that also implements two interfaces (`stack_write_if` / `stack_read_if`) and is bound to `producer` / `consumer` ports via `sc_port<IF>`. |
+| [`demo_prim_channel/`](demo_prim_channel/) | `fifo_tb` | Primitive channel: an `sc_prim_channel` blocking FIFO. Shows the evaluate/update split, `request_update()` / `update()`, and blocking through dynamic sensitivity (`wait(sc_event&)`). |
 
 ## Prerequisites
 
@@ -30,6 +31,7 @@ cmake --build build
 
 ./build/demo_xor/exor2_tb
 ./build/demo_hier_channel/stack_tb
+./build/demo_prim_channel/fifo_tb
 ```
 
 ## Build & run — one demo on its own
@@ -59,7 +61,11 @@ sc_demo/
 │   ├── CMakeLists.txt
 │   ├── README.md
 │   └── *.cpp / *.h
-└── demo_hier_channel/
+├── demo_hier_channel/
+│   ├── CMakeLists.txt
+│   ├── README.md
+│   └── *.cpp / *.h
+└── demo_prim_channel/
     ├── CMakeLists.txt
     ├── README.md
     └── *.cpp / *.h
