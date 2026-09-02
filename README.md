@@ -16,6 +16,7 @@ here is platform-specific.
 | [`demo_prim_channel/`](demo_prim_channel/) | `fifo_tb` | Primitive channel: an `sc_prim_channel` blocking FIFO. Shows the evaluate/update split, `request_update()` / `update()`, and blocking through dynamic sensitivity (`wait(sc_event&)`). |
 | [`demo_tlm2_gs1/`](demo_tlm2_gs1/) | `tlm2_gs1` | TLM-2.0 getting started (1): one initiator bound directly to one target (memory), loosely-timed `b_transport` with the generic payload and timing annotation. |
 | [`demo_tlm2_gs2/`](demo_tlm2_gs2/) | `tlm2_gs2` | TLM-2.0 getting started (2): adds the Direct Memory Interface + DMI hint, the debug transport interface, and per-error response-status codes. |
+| [`demo_tlm2_gs3/`](demo_tlm2_gs3/) | `tlm2_gs3` | TLM-2.0 getting started (3): a `Router<N>` interconnect between the initiator and 4 targets — address decode/mask on the forward path, tagged sockets + address recompose on the backward path. |
 
 ## Prerequisites
 
@@ -36,6 +37,7 @@ cmake --build build
 ./build/demo_prim_channel/fifo_tb
 ./build/demo_tlm2_gs1/tlm2_gs1
 ./build/demo_tlm2_gs2/tlm2_gs2
+./build/demo_tlm2_gs3/tlm2_gs3
 ```
 
 ## Build & run — one demo on its own
@@ -77,7 +79,11 @@ sc_demo/
 │   ├── CMakeLists.txt
 │   ├── README.md
 │   └── *.cpp / *.h
-└── demo_tlm2_gs2/           # + DMI, debug transport, response status
+├── demo_tlm2_gs2/           # + DMI, debug transport, response status
+│   ├── CMakeLists.txt
+│   ├── README.md
+│   └── *.cpp / *.h
+└── demo_tlm2_gs3/           # + Router<N> interconnect, address translation
     ├── CMakeLists.txt
     ├── README.md
     └── *.cpp / *.h
