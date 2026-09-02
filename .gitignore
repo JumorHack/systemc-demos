@@ -4,6 +4,9 @@ build/
 # SystemC waveform dumps
 *.vcd
 
+# demo_tlm2_gs4 trace output
+foo.txt
+
 # Editor / OS cruft
 .DS_Store
 .vscode/
