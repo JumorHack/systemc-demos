@@ -5,13 +5,18 @@ The smallest useful TLM-2.0 model: **one initiator bound directly to one target*
 blocking transport (`b_transport`) with the generic payload and a single
 timing-annotation argument.
 
-Ported verbatim from the Doulos *TLM-2.0 Getting Started* tutorial.
+From the Doulos *TLM-2.0 Getting Started* tutorial (example 1), split into one
+file per component following
+[SingularityKChen/SystemC-Training](https://github.com/SingularityKChen/SystemC-Training).
 
 ## Files
 
 | File | Contents |
 |------|----------|
-| [`tlm2_getting_started_1.cpp`](tlm2_getting_started_1.cpp) | Everything: `Initiator`, `Memory`, `Top`, `sc_main`. |
+| [`initiator.h`](initiator.h) | `struct Initiator` — the socket, the `thread_process` that builds and sends transactions. |
+| [`target.h`](target.h) | `struct Memory` — the socket, the `b_transport` callback, `int mem[256]`. Carries `#define SC_INCLUDE_DYNAMIC_PROCESSES`. |
+| [`top.h`](top.h) | `SC_MODULE(Top)` — instantiates both and binds the sockets. |
+| [`testbench.cpp`](testbench.cpp) | Doulos Apache-2.0 header + `sc_main`. |
 
 ## What it models
 
@@ -66,12 +71,12 @@ Writes store `0xFF0000nn`; reads return the target's random init data
 ## Notes
 
 - **`#define SC_INCLUDE_DYNAMIC_PROCESSES`** before `#include "systemc"` is
-  mandatory — `simple_target_socket` spawns helper processes internally.
+  mandatory — `simple_target_socket` spawns helper processes internally. It lives
+  in [`target.h`](target.h), the file that pulls in `simple_target_socket.h`.
 - Uses the namespaced headers (`#include "systemc"` + `using namespace sc_core;`
-  …), unlike the other demos which use `systemc.h`. Both styles link against the
+  …), unlike the non-TLM demos which use `systemc.h`. Both styles link against the
   same `SystemC::systemc` target.
 - The `trans` payload and the `Top` sub-modules are `new`ed and never `delete`d —
   a small leak, kept as-is to match the reference example.
-- This is *LT / example 1*. Later tutorial steps add an interconnect component,
-  DMI, the debug transport interface, and the approximately-timed
-  (`nb_transport`) style.
+- This is *LT / example 1*. [`../demo_tlm2_gs2`](../demo_tlm2_gs2/) adds DMI, the
+  debug transport interface, and proper response-status codes.
